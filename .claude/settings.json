@@ -3,7 +3,10 @@
     "allow": [
       "Bash(dir \"C:\\\\Users\\\\keren\\\\.claude\\\\projects\")",
       "Skill(start-from-template)",
-      "Skill(start-from-template:*)"
+      "Skill(start-from-template:*)",
+      "Bash(vercel env *)",
+      "Bash(vercel:*)",
+      "PowerShell(vercel:*)"
     ]
   },
   "enabledPlugins": {}
