@@ -1,5 +1,7 @@
+import Link from "next/link"
 import { Wheat, Croissant, ShoppingBag, Heart, Clock, MapPin } from "lucide-react"
 
+import { Header } from "@/components/header"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -10,7 +12,6 @@ import {
 } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
-import { ThemeToggle } from "@/components/theme-toggle"
 
 const products = [
   {
@@ -39,23 +40,7 @@ const products = [
 export default function Page() {
   return (
     <div className="bg-background text-foreground min-h-svh">
-      <header className="border-border/40 bg-background/80 sticky top-0 z-50 w-full border-b backdrop-blur">
-        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
-          <div className="flex items-center gap-2">
-            <Wheat className="text-primary size-6" />
-            <span className="text-lg font-semibold">לחם של אמא</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Button variant="ghost" size="sm" className="hidden sm:inline-flex">
-              התפריט
-            </Button>
-            <Button variant="ghost" size="sm" className="hidden sm:inline-flex">
-              עלינו
-            </Button>
-            <ThemeToggle />
-          </div>
-        </div>
-      </header>
+      <Header />
 
       <main>
         <section className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
@@ -74,11 +59,11 @@ export default function Page() {
               בלי קיצורי דרך, בלי תוספות. רק מה שאמא הייתה שמה.
             </p>
             <div className="mt-2 flex flex-col gap-3 sm:flex-row">
-              <Button size="lg" className="gap-2">
+              <Button render={<Link href="/menu" />} size="lg" className="gap-2">
                 <ShoppingBag className="size-4" />
                 להזמין עכשיו
               </Button>
-              <Button size="lg" variant="outline">
+              <Button render={<Link href="/menu" />} size="lg" variant="outline">
                 לתפריט המלא
               </Button>
             </div>
@@ -118,7 +103,7 @@ export default function Page() {
                   </CardHeader>
                   <CardContent className="mt-auto flex items-center justify-between">
                     <span className="text-2xl font-semibold">{product.price}</span>
-                    <Button variant="ghost" size="sm">
+                    <Button render={<Link href="/menu" />} variant="ghost" size="sm">
                       להזמנה
                     </Button>
                   </CardContent>
