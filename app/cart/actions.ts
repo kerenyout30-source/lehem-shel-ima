@@ -25,7 +25,6 @@ export async function submitOrder(
   const {
     data: { user },
   } = await supabase.auth.getUser()
-  if (!user) return { ok: false, error: "יש להתחבר לפני שליחת הזמנה" }
   if (!input.items.length) return { ok: false, error: "הסל ריק" }
 
   // Verify stock availability for all items
@@ -59,7 +58,7 @@ export async function submitOrder(
   const { data: order, error: orderErr } = await supabase
     .from("orders")
     .insert({
-      customer_id: user.id,
+      customer_id: user?.id ?? null,
       customer_name: input.customer_name.trim(),
       customer_phone: input.customer_phone.trim(),
       customer_email: input.customer_email.trim(),

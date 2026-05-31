@@ -54,7 +54,7 @@ export function CheckoutForm({ defaultName, defaultPhone, defaultEmail }: Props)
       }
       clearCart()
       toast.success(`ההזמנה נשלחה! מספר הזמנה: ${result.order_number}`)
-      router.push(`/orders/${result.order_id}`)
+      router.push(`/order-confirmation/${result.order_id}`)
       router.refresh()
     })
   }

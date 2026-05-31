@@ -26,27 +26,32 @@ export default async function CartPage() {
             </CardContent>
           </Card>
 
-          {user ? (
+          <Card>
+            <CardHeader>
+              <CardTitle>פרטי הזמנה</CardTitle>
+              {!user && (
+                <p className="text-muted-foreground mt-2 text-sm">
+                  * אתה יכול להזמין ללא חשבון. אם תרצה, תוכל ליצור חשבון אחרי ההזמנה
+                </p>
+              )}
+            </CardHeader>
+            <CardContent>
+              <CheckoutForm
+                defaultName={user?.profile?.full_name ?? ""}
+                defaultPhone={user?.profile?.phone ?? ""}
+                defaultEmail={user?.email ?? ""}
+              />
+            </CardContent>
+          </Card>
+
+          {!user && (
             <Card>
               <CardHeader>
-                <CardTitle>פרטי הזמנה</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CheckoutForm
-                  defaultName={user.profile?.full_name ?? ""}
-                  defaultPhone={user.profile?.phone ?? ""}
-                  defaultEmail={user.email}
-                />
-              </CardContent>
-            </Card>
-          ) : (
-            <Card>
-              <CardHeader>
-                <CardTitle>צריך להתחבר</CardTitle>
+                <CardTitle>יש לך כבר חשבון?</CardTitle>
               </CardHeader>
               <CardContent className="flex flex-col gap-3">
                 <p className="text-muted-foreground text-sm">
-                  כדי להשלים את ההזמנה ולעקוב אחריה, צריך חשבון.
+                  התחבר כדי לראות את ההזמנות שלך בהיסטוריית ההזמנות
                 </p>
                 <div className="flex gap-2">
                   <Button render={<Link href="/login?next=/cart" />}>
@@ -56,7 +61,7 @@ export default async function CartPage() {
                     render={<Link href="/signup?next=/cart" />}
                     variant="outline"
                   >
-                    הרשמה
+                    הרשמה חדשה
                   </Button>
                 </div>
               </CardContent>

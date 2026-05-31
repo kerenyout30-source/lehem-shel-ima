@@ -9,13 +9,13 @@ async function ensureAdmin() {
   const {
     data: { user },
   } = await supabase.auth.getUser()
-  if (!user) throw new Error("Unauthorized")
+  if (!user) throw new Error("יש להתחבר")
   const { data: profile } = await supabase
     .from("profiles")
     .select("role")
     .eq("id", user.id)
     .maybeSingle()
-  if (profile?.role !== "admin") throw new Error("Forbidden")
+  if (profile?.role !== "admin") throw new Error("רק אדמין יכול לעדכן הזמנות")
   return supabase
 }
 
@@ -39,31 +39,45 @@ export async function updateOrderStatus(
   orderId: string,
   newStatus: OrderStatus,
 ) {
-  const supabase = await ensureAdmin()
-  const { error } = await supabase
-    .from("orders")
-    .update({ status: newStatus })
-    .eq("id", orderId)
-  if (error) return { ok: false as const, error: error.message }
+  try {
+    const supabase = await ensureAdmin()
+    const { error } = await supabase
+      .from("orders")
+      .update({ status: newStatus })
+      .eq("id", orderId)
+    if (error) return { ok: false as const, error: error.message }
 
-  if (newStatus === "ready") {
-    await notifyCustomer(orderId)
+    if (newStatus === "ready") {
+      await notifyCustomer(orderId)
+    }
+
+    revalidatePath("/admin/orders")
+    revalidatePath(`/admin/orders/${orderId}`)
+    revalidatePath("/orders")
+    return { ok: true as const }
+  } catch (err) {
+    return {
+      ok: false as const,
+      error: err instanceof Error ? err.message : "שגיאה בעדכון הזמנה",
+    }
   }
-
-  revalidatePath("/admin/orders")
-  revalidatePath(`/admin/orders/${orderId}`)
-  revalidatePath("/orders")
-  return { ok: true as const }
 }
 
 export async function togglePaid(orderId: string, isPaid: boolean) {
-  const supabase = await ensureAdmin()
-  const { error } = await supabase
-    .from("orders")
-    .update({ is_paid: isPaid })
-    .eq("id", orderId)
-  if (error) return { ok: false as const, error: error.message }
-  revalidatePath("/admin/orders")
-  revalidatePath(`/admin/orders/${orderId}`)
-  return { ok: true as const }
+  try {
+    const supabase = await ensureAdmin()
+    const { error } = await supabase
+      .from("orders")
+      .update({ is_paid: isPaid })
+      .eq("id", orderId)
+    if (error) return { ok: false as const, error: error.message }
+    revalidatePath("/admin/orders")
+    revalidatePath(`/admin/orders/${orderId}`)
+    return { ok: true as const }
+  } catch (err) {
+    return {
+      ok: false as const,
+      error: err instanceof Error ? err.message : "שגיאה בעדכון תשלום",
+    }
+  }
 }
