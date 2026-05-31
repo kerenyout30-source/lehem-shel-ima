@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -32,47 +33,47 @@ export function UserMenu({ userEmail, fullName, isAdmin }: Props) {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger
-        render={
-          <Button variant="ghost" size="icon" aria-label="חשבון המשתמש">
-            <span className="bg-primary text-primary-foreground flex size-8 items-center justify-center rounded-full text-sm font-semibold">
-              {initial}
-            </span>
-          </Button>
-        }
-      />
+      <DropdownMenuTrigger className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/80 outline-none" aria-label="חשבון המשתמש">
+        {initial}
+      </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
-        <DropdownMenuLabel>
-          <div className="flex flex-col gap-0.5">
-            <span className="text-sm font-medium">{fullName || "משתמש"}</span>
-            <span dir="ltr" className="text-muted-foreground text-xs text-start">
-              {userEmail}
-            </span>
-          </div>
-        </DropdownMenuLabel>
+        <DropdownMenuGroup>
+          <DropdownMenuLabel>
+            <div className="flex flex-col gap-0.5">
+              <span className="text-sm font-medium">{fullName || "משתמש"}</span>
+              <span dir="ltr" className="text-muted-foreground text-xs text-start">
+                {userEmail}
+              </span>
+            </div>
+          </DropdownMenuLabel>
+        </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem render={<Link href="/orders" />}>
-          <ShoppingBag className="size-4" />
-          ההזמנות שלי
-        </DropdownMenuItem>
-        {isAdmin && (
-          <DropdownMenuItem render={<Link href="/admin/orders" />}>
-            <Settings className="size-4" />
-            ניהול
+        <DropdownMenuGroup>
+          <DropdownMenuItem render={<Link href="/orders" />}>
+            <ShoppingBag className="size-4" />
+            ההזמנות שלי
           </DropdownMenuItem>
-        )}
+          {isAdmin && (
+            <DropdownMenuItem render={<Link href="/admin/orders" />}>
+              <Settings className="size-4" />
+              ניהול
+            </DropdownMenuItem>
+          )}
+        </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <form action="/logout" method="post">
-          <DropdownMenuItem
-            render={
-              <button type="submit" className="w-full" />
-            }
-            variant="destructive"
-          >
-            <LogOut className="size-4" />
-            יציאה
-          </DropdownMenuItem>
-        </form>
+        <DropdownMenuGroup>
+          <form action="/logout" method="post">
+            <button
+              type="submit"
+              className="w-full"
+            >
+              <DropdownMenuItem variant="destructive">
+                <LogOut className="size-4" />
+                יציאה
+              </DropdownMenuItem>
+            </button>
+          </form>
+        </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
   )

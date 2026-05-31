@@ -29,7 +29,12 @@ export default async function MenuPage({
     if (cat) productsQuery = productsQuery.eq("category_id", cat.id)
   }
 
-  const { data: products = [] } = await productsQuery
+  const { data: products = [], error } = await productsQuery
+
+  if (error) {
+    console.error("Products query error:", error)
+  }
+  console.log("Products loaded:", products?.length ?? 0, "products")
 
   return (
     <div className="bg-background text-foreground min-h-svh">

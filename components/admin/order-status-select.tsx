@@ -38,19 +38,16 @@ export function OrderStatusSelect({
   }
 
   return (
-    <NativeSelect>
-      <select
-        value={status}
-        onChange={onChange}
-        disabled={isPending}
-        className="size-full appearance-none bg-transparent ps-2.5 pe-8 outline-none"
-      >
-        {STATUS_ORDER.map((s) => (
-          <option key={s} value={s}>
-            {STATUS_LABELS_HE[s]}
-          </option>
-        ))}
-      </select>
+    <NativeSelect
+      value={status}
+      onChange={onChange}
+      disabled={isPending}
+    >
+      {STATUS_ORDER.map((s) => (
+        <option key={s} value={s}>
+          {STATUS_LABELS_HE[s]}
+        </option>
+      ))}
     </NativeSelect>
   )
 }
