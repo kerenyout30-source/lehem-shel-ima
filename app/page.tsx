@@ -1,7 +1,8 @@
 import Link from "next/link"
-import { Wheat, Croissant, ShoppingBag, Heart, Clock, MapPin } from "lucide-react"
+import { Wheat, Croissant, Heart, Clock, MapPin, ShoppingBag } from "lucide-react"
 
 import { Header } from "@/components/header"
+import { AnimatedHeart } from "@/components/animated-heart"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -43,30 +44,27 @@ export default function Page() {
       <Header />
 
       <main>
-        <section className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
-          <div className="mx-auto flex max-w-3xl flex-col items-center gap-6 text-center">
-            <Badge variant="secondary" className="gap-1.5">
-              <Heart className="size-3.5" />
-              נאפה באהבה כל בוקר
-            </Badge>
-            <h1 className="text-4xl font-bold tracking-tight sm:text-6xl">
-              לחם ביתי כמו פעם,
-              <br />
-              <span className="text-primary">רק שאמא אופה אותו.</span>
-            </h1>
-            <p className="text-muted-foreground max-w-xl text-lg leading-relaxed">
-              מאפייה ביתית קטנה בלב השכונה. מחמצת טבעית, קמח מלא, וזמן.
-              בלי קיצורי דרך, בלי תוספות. רק מה שאמא הייתה שמה.
-            </p>
-            <div className="mt-2 flex flex-col gap-3 sm:flex-row">
-              <Button render={<Link href="/menu" />} size="lg" className="gap-2">
-                <ShoppingBag className="size-4" />
-                להזמין עכשיו
-              </Button>
-              <Button render={<Link href="/menu" />} size="lg" variant="outline">
-                לתפריט המלא
-              </Button>
-            </div>
+        <section className="mx-auto max-w-6xl px-6 py-20" dir="rtl">
+          <div className="mb-4 flex items-center justify-center gap-2">
+            <AnimatedHeart />
+            <span className="text-sm">נאפה באהבה כל בוקר</span>
+          </div>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 text-center">
+            לחם בייתי כמו פעם,<br />
+            רק שאמא אופה אותו
+          </h1>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8 text-center">
+            מאפייה ביתית קטנה בלב השכונה. מחמצת טבעית, קמח מלא וזמן, בלי קיצורי דרך,<br />
+            בלי תוספות, רק מה שאמא הייתה שמה.
+          </p>
+          <div className="flex gap-4 justify-center flex-wrap">
+            <Button render={<Link href="/menu" />} size="lg">
+              להזמין עכשיו
+              <ShoppingBag className="size-4 ms-2" />
+            </Button>
+            <Button render={<Link href="/menu" />} variant="outline" size="lg">
+              לתפריט המלא
+            </Button>
           </div>
         </section>
 
